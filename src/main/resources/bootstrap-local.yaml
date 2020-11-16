@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    nacos:
+      server-addr: 192.168.30.21:8848
+      discovery:
+        server-addr: 192.168.30.21:8848
+        namespace: local
+        group: local
+      config:
+        server-addr: 192.168.30.21:8848
+        namespace: local
+        group: local
+        file-extension: yaml
+
+server:
+  port: 80
