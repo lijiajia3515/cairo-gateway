@@ -1,0 +1,10 @@
+hfhk:
+  server:
+    port: 7822
+  consul:
+    host: 192.168.30.22
+    port: 8500
+    discovery:
+      instance-zone: hfhk
+      instance-group: hfhk
+

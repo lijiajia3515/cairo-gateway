@@ -1,0 +1,103 @@
+spring:
+  application:
+    name: gateway-v1
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    locale: zh_CN
+    default-property-inclusion: non_empty
+    property-naming-strategy: UPPER_CAMEL_CASE
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+      WRITE_DATE_KEYS_AS_TIMESTAMPS: false
+      WRITE_DATES_WITH_ZONE_ID: false
+    deserialization:
+      ADJUST_DATES_TO_CONTEXT_TIME_ZONE: false
+  web:
+    locale: zh_CN
+  webflux:
+    format:
+      date: yyyy-MM-dd
+      time: HH:mm:ss
+      date-time: yyyy-MM-dd HH:mm:ss
+
+  cloud:
+    consul:
+      host: ${hfhk.consul.host:localhost}
+      port: ${hfhk.consul.port:8500}
+      discovery:
+        prefer-ip-address: true
+        health-check-interval: 5s
+        instance-zone: ${hfhk.consul.discovery.instance-zone:hfhk}
+        instance-group: ${hfhk.consul.discovery.instance-group:hfhk}
+        tags:
+          - v1
+      config:
+        enabled: true
+        format: yaml
+    gateway:
+      routes:
+        - id: serviceauth
+          uri: lb://service-auth-v1
+          predicates:
+            - Path=/V1/User/**,/V1/Role/**,/V1/Department/**,/V1/Resource/**
+          filters:
+            - StripPrefix=1
+        - id: service_system_dictionary
+          uri: lb://service-system-v1
+          predicates:
+            - Path=/V1/Dictionary/**
+          filters:
+            - StripPrefix=1
+        - id: service_system_file
+          uri: lb://service-system-v1
+          predicates:
+            - Path=/V1/File/**,/V1/Folder/**
+          filters:
+            - StripPrefix=1
+        - id: service_message_message
+          uri: lb://service-message-v1
+          predicates:
+            - Path=/V1/Message/**,/V1/Notice/**
+          filters:
+            - StripPrefix=1
+
+server:
+  port: ${hfhk.server.port:80}
+  http2:
+    enabled: true
+  servlet:
+    encoding:
+      force: true
+
+feign:
+  hystrix:
+    enabled: false
+  okhttp:
+    enabled: true
+  httpclient:
+    connection-timeout: 60000
+  compression:
+    request:
+      min-request-size: 204000
+  client:
+    default-to-properties: true
+    config:
+      default:
+        logger-level: FULL
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - '*'
+
+logging:
+  level:
+    root: DEBUG
+    com.hfhk: DEBUG
+  file:
+    name: /hfhk/gateway/logs/hfhk.log
+
+
