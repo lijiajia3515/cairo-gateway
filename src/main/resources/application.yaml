@@ -23,7 +23,7 @@ spring:
 
   cloud:
     consul:
-      host: ${hfhk.consul.host:localhost}
+      host: ${hfhk.consul.host:consul}
       port: ${hfhk.consul.port:8500}
       discovery:
         prefer-ip-address: true
@@ -37,7 +37,7 @@ spring:
         format: yaml
     gateway:
       routes:
-        - id: serviceauth
+        - id: service_auth
           uri: lb://service-auth-v1
           predicates:
             - Path=/V1/User/**,/V1/Role/**,/V1/Department/**,/V1/Resource/**
