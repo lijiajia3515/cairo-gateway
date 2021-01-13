@@ -56,6 +56,12 @@ spring:
             - Path=/V1/File/**,/V1/Folder/**
           filters:
             - StripPrefix=1
+        - id: service_check
+          uri: lb://service-check-v1
+          predicates:
+            - Path=/V1/Check/**,/V1/Problem/**,/V1/Dist/**
+          filters:
+            - StripPrefix=1
         - id: service_message_message
           uri: lb://service-message-v1
           predicates:
