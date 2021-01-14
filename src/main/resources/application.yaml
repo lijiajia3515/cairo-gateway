@@ -62,7 +62,13 @@ spring:
             - Path=/V1/Check/**,/V1/Problem/**,/V1/Dist/**
           filters:
             - StripPrefix=1
-        - id: service_message_message
+        - id: service_cb
+          uri: lb://service-cb-v1
+          predicates:
+            - Path=/V1/Cb/Project/**
+          filters:
+            - StripPrefix=2
+        - id: service_message
           uri: lb://service-message-v1
           predicates:
             - Path=/V1/Message/**,/V1/Notice/**
