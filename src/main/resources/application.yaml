@@ -1,6 +1,8 @@
 spring:
   application:
     name: gateway-v1
+  profiles:
+    active: local
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
