@@ -67,7 +67,7 @@ spring:
         - id: service_cb
           uri: lb://service-cb-v1
           predicates:
-            - Path=/V1/Cb/Project/**
+            - Path=/V1/Cb/Project/**,/V1/Cb/Instruct/**,/V1/Cb/Supervision/**
           filters:
             - StripPrefix=2
         - id: service_message
