@@ -39,6 +39,17 @@ spring:
         enabled: true
         format: yaml
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
       routes:
         - id: service_auth
           uri: lb://service-auth-v1
@@ -110,8 +121,8 @@ management:
 
 logging:
   level:
-    root: DEBUG
-    com.hfhk: DEBUG
+    root: debug
+    com.hfhk: debug
   file:
     name: /hfhk/gateway/logs/hfhk.log
 
